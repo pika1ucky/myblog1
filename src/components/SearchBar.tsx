@@ -8,12 +8,8 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
   
-  // 创建一个防抖的搜索函数
-  const debouncedSearch = useRef(
-    debounce((term: string) => {
-      onSearch(term);
-    }, 300)
-  ).current;
+  // 创建防抖搜索函数
+  const debouncedSearch = useRef(debounce(onSearch, 300)).current;
 
   // 处理输入变化
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

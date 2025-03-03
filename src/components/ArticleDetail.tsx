@@ -22,7 +22,6 @@ const ArticleDetail: React.FC = () => {
     summary: "React 18 带来了许多激动人心的新特性...",
     publishDate: "2024-03-01",
     category: "React",
-    slug: "react-18-features",
     content: `
 # React 18 新特性解析
 

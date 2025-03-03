@@ -5,14 +5,13 @@ import SearchBar from './SearchBar';
 import { Article, Category } from '../types/article';
 
 // 静态文章数据
-const ARTICLES = [
+const ARTICLES: Article[] = [
   {
     id: '1',
     title: '使用 React 和 TypeScript 构建现代 Web 应用',
     summary: '探索如何使用 React 和 TypeScript 构建可扩展的 Web 应用程序，包括最佳实践和常见陷阱。',
     publishDate: '2024-02-15',
     category: 'React',
-    slug: 'react-typescript-guide',
     content: '# 使用 React 和 TypeScript 构建现代 Web 应用\n\n这里是完整的文章内容...',
     tags: ['React', 'TypeScript', 'Web Development']
   },
@@ -64,8 +63,7 @@ const HomePage: React.FC = () => {
 
   // 获取所有唯一的分类
   const categories = useMemo(() => {
-    const allCategories = ARTICLES.map(article => article.category);
-    return Array.from(new Set(allCategories));
+    return Array.from(new Set(ARTICLES.map(article => article.category)));
   }, []);
 
   // 根据搜索关键词和分类筛选文章
@@ -74,7 +72,6 @@ const HomePage: React.FC = () => {
       const matchesCategory = !selectedCategory || article.category === selectedCategory;
       const matchesSearch = !searchKeyword || (
         article.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-        (article.content?.toLowerCase() || '').includes(searchKeyword.toLowerCase()) ||
         article.summary.toLowerCase().includes(searchKeyword.toLowerCase())
       );
       return matchesCategory && matchesSearch;
