@@ -13,7 +13,7 @@ SyntaxHighlighter.registerLanguage('javascript', javascript);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 
 const ArticleDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { articleId } = useParams();
   const navigate = useNavigate();
 
   // 模拟文章数据

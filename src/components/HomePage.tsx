@@ -9,24 +9,20 @@ const HomePage: React.FC = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   // 模拟文章数据
-  const articles: Article[] = [
+  const articles = useMemo(() => [
     {
-      id: 1,
-      title: "React 18 新特性解析",
-      summary: "React 18 带来了许多激动人心的新特性，包括自动批处理、并发渲染、Suspense 服务端渲染等。本文将深入探讨这些特性如何提升应用性能和开发体验。",
-      publishDate: "2024-03-01",
-      slug: "react-18-features",
-      content: "# React 18 新特性解析\n\n这里是完整的文章内容...",
-      category: "React"
+      id: '1',
+      title: '使用 React 和 TypeScript 构建现代 Web 应用',
+      summary: '探索如何使用 React 和 TypeScript 构建可扩展的 Web 应用程序，包括最佳实践和常见陷阱。',
+      date: '2024-02-15',
+      tags: ['React', 'TypeScript', 'Web Development']
     },
     {
-      id: 2,
-      title: "使用 Tailwind CSS 构建现代化界面",
-      summary: "Tailwind CSS 是一个功能类优先的 CSS 框架，它可以帮助开发者快速构建自定义界面。本文将介绍如何使用 Tailwind CSS 创建响应式和美观的用户界面。",
-      publishDate: "2024-02-28",
-      slug: "tailwind-css-guide",
-      content: "# 使用 Tailwind CSS 构建现代化界面\n\n这里是完整的文章内容...",
-      category: "前端开发"
+      id: '2',
+      title: 'Tailwind CSS 实战指南',
+      summary: '学习如何使用 Tailwind CSS 快速构建美观的用户界面，以及如何优化和自定义样式。',
+      date: '2024-02-14',
+      tags: ['CSS', 'Tailwind', 'Design']
     },
     {
       id: 3,
@@ -55,7 +51,7 @@ const HomePage: React.FC = () => {
       content: "# 前端工程化实践\n\n这里是完整的文章内容...",
       category: "工程化"
     }
-  ];
+  ], []); // 空依赖数组，因为这是静态数据
 
   // 获取所有唯一的分类
   const categories = useMemo(() => {

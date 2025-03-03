@@ -8,18 +8,14 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // 使用debounce防止频繁搜索
-  const debouncedSearch = useCallback(
-    debounce((value: string) => {
-      onSearch(value);
-    }, 300),
-    [onSearch]
-  );
+  const handleSearch = useCallback((term: string) => {
+    onSearch(term);
+  }, [onSearch]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    debouncedSearch(value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTerm = e.target.value;
+    setSearchTerm(newTerm);
+    handleSearch(newTerm);
   };
 
   return (
@@ -42,7 +38,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <input
         type="text"
         value={searchTerm}
-        onChange={handleSearch}
+        onChange={handleChange}
         placeholder="搜索文章标题或内容..."
         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
       />
