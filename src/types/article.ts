@@ -1,11 +1,12 @@
-export type Category = '前端开发' | '后端开发' | 'React' | 'TypeScript' | '工程化' | '最佳实践';
+export type Category = '后端开发' | 'React' | 'TypeScript' | '工程化' | 'CSS';
 
 export interface Article {
-  id: number;
+  id: string | number;
   title: string;
   summary: string;
   publishDate: string;
+  category: Category;
   slug: string;
   content: string;
-  category: Category;
+  tags?: string[];
 } 
