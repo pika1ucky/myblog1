@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { debounce } from 'lodash';
 
 interface SearchBarProps {
@@ -7,22 +7,28 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
-
-  // 使用 debounce 优化搜索性能
-  const debouncedSearch = useMemo(
-    () => debounce((term: string) => {
+  
+  // 创建一个防抖的搜索函数
+  const debouncedSearch = useRef(
+    debounce((term: string) => {
       onSearch(term);
-    }, 300),
-    [onSearch]
-  );
+    }, 300)
+  ).current;
 
+  // 处理输入变化
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTerm = e.target.value;
     setSearchTerm(newTerm);
     debouncedSearch(newTerm);
   };
 
-  // 在组件卸载时取消待处理的 debounce 调用
+  // 处理清除搜索
+  const handleClear = () => {
+    setSearchTerm('');
+    onSearch('');
+  };
+
+  // 组件卸载时清理
   useEffect(() => {
     return () => {
       debouncedSearch.cancel();
@@ -55,10 +61,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       />
       {searchTerm && (
         <button
-          onClick={() => {
-            setSearchTerm('');
-            onSearch('');
-          }}
+          onClick={handleClear}
           className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
         >
           <svg
