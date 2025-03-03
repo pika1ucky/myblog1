@@ -12,6 +12,7 @@ const ARTICLES: Article[] = [
     summary: '探索如何使用 React 和 TypeScript 构建可扩展的 Web 应用程序，包括最佳实践和常见陷阱。',
     publishDate: '2024-02-15',
     category: 'React',
+    slug: 'react-typescript-modern-web-app',
     content: '# 使用 React 和 TypeScript 构建现代 Web 应用\n\n这里是完整的文章内容...',
     tags: ['React', 'TypeScript', 'Web Development']
   },
