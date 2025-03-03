@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { debounce } from 'lodash';
 
 interface SearchBarProps {
@@ -8,15 +8,26 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = useCallback((term: string) => {
-    onSearch(term);
-  }, [onSearch]);
+  // 使用 debounce 优化搜索性能
+  const debouncedSearch = useMemo(
+    () => debounce((term: string) => {
+      onSearch(term);
+    }, 300),
+    [onSearch]
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTerm = e.target.value;
     setSearchTerm(newTerm);
-    handleSearch(newTerm);
+    debouncedSearch(newTerm);
   };
+
+  // 在组件卸载时取消待处理的 debounce 调用
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return (
     <div className="relative mb-8">

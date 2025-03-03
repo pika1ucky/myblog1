@@ -55,7 +55,8 @@ const HomePage: React.FC = () => {
 
   // 获取所有唯一的分类
   const categories = useMemo(() => {
-    return Array.from(new Set(articles.map(article => article.category)));
+    const allCategories = articles.map(article => article.category);
+    return Array.from(new Set(allCategories));
   }, [articles]);
 
   // 根据搜索关键词和分类筛选文章
@@ -63,9 +64,9 @@ const HomePage: React.FC = () => {
     return articles.filter(article => {
       const matchesCategory = !selectedCategory || article.category === selectedCategory;
       const matchesSearch = !searchKeyword || (
-        (article.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-        article.content.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-        article.summary.toLowerCase().includes(searchKeyword.toLowerCase()))
+        article.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        (article.content?.toLowerCase() || '').includes(searchKeyword.toLowerCase()) ||
+        article.summary.toLowerCase().includes(searchKeyword.toLowerCase())
       );
       return matchesCategory && matchesSearch;
     });
